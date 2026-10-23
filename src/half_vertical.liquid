@@ -11,32 +11,30 @@
       {% assign review_status = pr.reviewDecision | default: latest_review.state %}
 
       {% case review_status %}
-        {% when 'APPROVED' %}{% assign status_bg = 'bg--green' %}
-        {% when 'CHANGES_REQUESTED' %}{% assign status_bg = 'bg--red' %}
-        {% when 'COMMENTED' %}{% assign status_bg = 'bg--yellow' %}
-        {% when 'PENDING' %}{% assign status_bg = 'bg--yellow' %}
-        {% when 'REVIEW_REQUIRED' %}{% assign status_bg = 'bg--yellow' %}
+        {% when 'APPROVED' %}{% assign status_bg = 'bg--success' %}
+        {% when 'CHANGES_REQUESTED' %}{% assign status_bg = 'bg--error' %}
+        {% when 'COMMENTED' %}{% assign status_bg = 'bg--warning' %}
+        {% when 'PENDING' %}{% assign status_bg = 'bg--warning' %}
+        {% when 'REVIEW_REQUIRED' %}{% assign status_bg = 'bg--warning' %}
         {% else %}{% assign status_bg = 'bg--gray-20' %}
       {% endcase %}
 
       <div class="item">
-        <div class="meta w--7">
-          <span class="index {{ status_bg }} rounded--small flex flex--center w--7 h--7" data-pixel-perfect="true">
-            {% case review_status %}
-              {% when 'APPROVED' %}
-                <div class="approved-icon svg-icon"></div>
-              {% when 'CHANGES_REQUESTED' %}
-                <div class="changes-requested-icon svg-icon"></div>
-              {% when 'COMMENTED' %}
-                <div class="commented-icon svg-icon"></div>
-              {% when 'PENDING' %}
-                <div class="pending-icon svg-icon"></div>
-              {% when 'REVIEW_REQUIRED' %}
-                <div class="review-required-icon svg-icon"></div>
-              {% else %}
-                <div class="need-attention-icon svg-icon"></div>
-            {% endcase %}
-          </span>
+        <div class="meta w--7 {{ status_bg }} rounded--small flex flex--center">
+          {% case review_status %}
+            {% when 'APPROVED' %}
+              <div class="approved-icon svg-icon"></div>
+            {% when 'CHANGES_REQUESTED' %}
+              <div class="changes-requested-icon svg-icon"></div>
+            {% when 'COMMENTED' %}
+              <div class="commented-icon svg-icon"></div>
+            {% when 'PENDING' %}
+              <div class="pending-icon svg-icon"></div>
+            {% when 'REVIEW_REQUIRED' %}
+              <div class="review-required-icon svg-icon"></div>
+            {% else %}
+              <div class="need-attention-icon svg-icon"></div>
+          {% endcase %}
         </div>
         <div class="content">
           <span class="title title--small">
