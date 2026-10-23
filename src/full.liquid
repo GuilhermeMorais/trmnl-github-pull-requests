@@ -1,11 +1,89 @@
-<div class="layout layout--row gap--none h--full">
-  <div class="bg--green flex flex--center w--half h--full">
-    <span class="title title--large">APPROVED</span>
+<div class="layout layout--col">
+  <div class="title">
+    <i class="ti ti-brand-github"> </i>
+    Open Pull Requests
   </div>
-  <div class="bg--yellow flex flex--center w--half h--full">
-    <span class="title title--large">COMMENTED</span>
+
+  {% assign nodes = data.search.nodes %}
+  {% if nodes.size > 0 %}
+  <div class="grid grid--cols-1 gap--small h--full">
+    <div data-overflow="true" data-overflow-counter="true" data-overflow-max-cols="1">
+      <div class="flex flex--col">
+        {% for pr in nodes %}
+        {% assign latest_review = pr.reviews.nodes | reject: 'author.login', username | sort: 'submittedAt' | last %}
+        {% assign review_status = pr.reviewDecision | default: latest_review.state %}
+
+        {% case review_status %}
+          {% when 'APPROVED' %}{% assign status_bg = 'bg--green' %}
+          {% when 'CHANGES_REQUESTED' %}{% assign status_bg = 'bg--red' %}
+          {% when 'COMMENTED' %}{% assign status_bg = 'bg--yellow' %}
+          {% when 'PENDING' %}{% assign status_bg = 'bg--yellow' %}
+          {% when 'REVIEW_REQUIRED' %}{% assign status_bg = 'bg--yellow' %}
+          {% else %}{% assign status_bg = 'bg--gray-20' %}
+        {% endcase %}
+
+        <div class="item">
+          <div class="meta w--8">
+            <span class="index {{ status_bg }} rounded--small flex flex--center w--8 h--8" data-pixel-perfect="true">
+              {% case review_status %}
+                {% when 'APPROVED' %}
+                  <div class="approved-icon svg-icon"></div>
+                {% when 'CHANGES_REQUESTED' %}
+                  <div class="changes-requested-icon svg-icon"></div>
+                {% when 'COMMENTED' %}
+                  <div class="commented-icon svg-icon"></div>
+                {% when 'PENDING' %}
+                  <div class="pending-icon svg-icon"></div>
+                {% when 'REVIEW_REQUIRED' %}
+                  <div class="review-required-icon svg-icon"></div>
+                {% else %}
+                  <div class="need-attention-icon svg-icon"></div>
+              {% endcase %}
+            </span>
+          </div>
+          <div class="content">
+            <span class="title title--small">
+              {% if pr.isDraft %}
+              <i class="ti ti-git-pull-request-draft"></i>
+              {% else %}
+              <i class="ti ti-git-pull-request"></i>
+              {% endif %}
+              {{ pr.title | truncate: 150 }}
+              <span class="label label--small">#{{ pr.number }}</span>
+            </span>
+            <span class="description">
+              <i class="ti ti-world"></i> {{ pr.repository.nameWithOwner | truncate: 75 }}
+              {% if latest_review %}
+                {% assign comments = latest_review.comments.totalCount | plus: 0 %}
+                <i class="ti ti-user-circle"></i>
+                {{ latest_review.author.login }}
+              {% else %}
+                <i class="ti ti-user-circle"></i> No reviewer
+                {% assign comments = 0 %}
+              {% endif %}
+            </span>
+            <div class="flex gap--xsmall">
+              <span class="label label--small label--underline">
+                <i class="ti ti-message"></i> &nbsp;{{ comments | plus: pr.comments.totalCount }}
+              </span>
+              <span class="label label--small label--underline">
+                {{ latest_review.submittedAt | date: "on %d/%m at %H:%M" }}
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
   </div>
+  {% else %}
+  <div class="layout layout--col flex flex--center">
+    <i class="ti ti-check"></i>
+    <span>No pull requests open</span>
+  </div>
+  {% endif %}
 </div>
 <div class="title_bar">
-  <span class="title">green vs yellow</span>
+  <i class="ti ti-git-pull-request"></i>
+  <span class="title">Pull Requests of {{ username }}</span>
 </div>
