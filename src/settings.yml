@@ -5,32 +5,14 @@ dark_mode: 'no'
 static_data: '{"data":{"search":{"nodes":[{"url":"https://github.com/GuilhermeMorais/trmnl-plugins/pull/101","title":"Add color status chips to the PR list","number":101,"isDraft":false,"reviews":{"nodes":[{"state":"APPROVED","author":{"login":"octocat"},"comments":{"totalCount":2},"submittedAt":"2026-01-07T20:40:42Z"}]},"comments":{"totalCount":3},"repository":{"name":"trmnl-plugins","nameWithOwner":"GuilhermeMorais/trmnl-plugins"},"reviewDecision":"APPROVED","reviewRequests":{"nodes":[]}},{"url":"https://github.com/GuilhermeMorais/trmnl-plugins/pull/102","title":"Refactor the GraphQL query builder","number":102,"isDraft":false,"reviews":{"nodes":[{"state":"CHANGES_REQUESTED","author":{"login":"reviewer-bot"},"comments":{"totalCount":4},"submittedAt":"2026-01-06T09:12:00Z"}]},"comments":{"totalCount":1},"repository":{"name":"trmnl-plugins","nameWithOwner":"GuilhermeMorais/trmnl-plugins"},"reviewDecision":"CHANGES_REQUESTED","reviewRequests":{"nodes":[]}},{"url":"https://github.com/GuilhermeMorais/trmnl-plugins/pull/103","title":"Bump tabler-icons to 3.30.0","number":103,"isDraft":false,"reviews":{"nodes":[{"state":"COMMENTED","author":{"login":"copilot-pull-request-reviewer"},"comments":{"totalCount":5},"submittedAt":"2026-01-05T14:22:00Z"}]},"comments":{"totalCount":0},"repository":{"name":"trmnl-plugins","nameWithOwner":"GuilhermeMorais/trmnl-plugins"},"reviewDecision":null,"reviewRequests":{"nodes":[]}},{"url":"https://github.com/GuilhermeMorais/trmnl-github-pull-requests/pull/104","title":"WIP: ePaper preview caching","number":104,"isDraft":true,"reviews":{"nodes":[{"state":"PENDING","author":{"login":"alex-dev"},"comments":{"totalCount":0},"submittedAt":"2026-01-04T11:00:00Z"}]},"comments":{"totalCount":2},"repository":{"name":"trmnl-github-pull-requests","nameWithOwner":"GuilhermeMorais/trmnl-github-pull-requests"},"reviewDecision":null,"reviewRequests":{"nodes":[]}},{"url":"https://github.com/GuilhermeMorais/trmnl-github-pull-requests/pull/105","title":"Add README screenshots","number":105,"isDraft":false,"reviews":{"nodes":[]},"comments":{"totalCount":0},"repository":{"name":"trmnl-github-pull-requests","nameWithOwner":"GuilhermeMorais/trmnl-github-pull-requests"},"reviewDecision":"REVIEW_REQUIRED","reviewRequests":{"nodes":[]}},{"url":"https://github.com/GuilhermeMorais/trmnl-github-pull-requests/pull/106","title":"Draft: split shared markup into partials","number":106,"isDraft":true,"reviews":{"nodes":[]},"comments":{"totalCount":0},"repository":{"name":"trmnl-github-pull-requests","nameWithOwner":"GuilhermeMorais/trmnl-github-pull-requests"},"reviewDecision":null,"reviewRequests":{"nodes":[]}}]}}}'
 polling_verb: post
 framework_version: latest
-serverless_language:
-refresh_interval_floor:
+serverless_language: ''
+refresh_interval_floor: ''
 polling_url: https://api.github.com/graphql
 polling_headers: authorization=token {{ api_token }}
 polling_body: '{"query":"query ($q: String!, $first: Int!) { search(query: $q, type: ISSUE, first: $first) { nodes { ... on PullRequest { number title isDraft url repository { name nameWithOwner } comments { totalCount } reviewDecision reviewRequests(last: 10) { nodes { requestedReviewer { ... on User { login } ... on Team { name } } } } reviews(last: 20) { nodes { author { login } state submittedAt comments { totalCount } } } } } } }","variables":{"q":"is:pr is:open author:{{ username }}","first":10}}'
 id: 221833
 oauth_enabled: 'false'
 oauth_pkce_enabled: 'no'
-oauth_authorize_url: ''
-oauth_token_url: ''
-oauth_scopes: ''
-oauth_scope_separator: ''
-oauth_refresh_url: ''
-oauth_auth_params: ''
-oauth_token_headers: ''
-oauth_token_site: ''
-oauth_token_params: ''
-oauth_token_request_auth_method: ''
-oauth_body_format: ''
-oauth_token_response_metadata: ''
-oauth_authorization_method: ''
-oauth_refresh_params: ''
-oauth_token_field_name: ''
-oauth_expiry_field_name: ''
-oauth_expiry_strategy: ''
-oauth_fixed_expiry_ms: ''
 custom_fields:
 - keyname: author_bio
   field_type: author_bio
@@ -48,5 +30,5 @@ custom_fields:
   name: Github Username
   description: Used to filter the pull requests.
 name: GitHub Pull Requests
-description:
+description: ''
 refresh_interval: 120
